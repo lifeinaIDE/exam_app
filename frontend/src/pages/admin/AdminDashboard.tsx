@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { collection, getDocs, doc, deleteDoc, query, where } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import { syncLocalSubmissionsToFirestore } from '../../utils/syncResults';
 
 interface CandidateAnswer {
   qNo: number;
@@ -229,9 +230,31 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      fetchCandidates();
+      // First sync any local tests on this device to Firestore
+      syncLocalSubmissionsToFirestore().then(() => {
+        fetchCandidates();
+      });
+
+      // Periodic auto-refresh every 6 seconds so incoming submissions from other devices appear live
+      const interval = setInterval(() => {
+        fetchCandidates();
+      }, 6000);
+
+      return () => clearInterval(interval);
     }
   }, [isAuthenticated, fetchCandidates]);
+
+  const handleManualSync = async () => {
+    setLoading(true);
+    const count = await syncLocalSubmissionsToFirestore();
+    await fetchCandidates();
+    setLoading(false);
+    if (count > 0) {
+      toast.success(`Synced ${count} submission(s) to Firestore!`);
+    } else {
+      toast.info('Fetched latest participant submissions.');
+    }
+  };
 
   const handleUnlock = (e: React.FormEvent) => {
     e.preventDefault();
@@ -411,6 +434,17 @@ export default function AdminDashboard() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2 md:gap-3 w-full md:w-auto justify-end">
+          <button 
+            onClick={handleManualSync}
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-blue-50 hover:bg-blue-100 text-primary border border-blue-200 rounded-lg text-sm font-semibold transition shadow-sm"
+            title="Upload local tests to Firestore and fetch latest from all devices"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            Sync Cloud
+          </button>
+
           <button 
             onClick={fetchCandidates}
             className="flex items-center gap-1.5 px-3.5 py-2 bg-gray-100 hover:bg-gray-200 text-textPrimary rounded-lg text-sm font-semibold transition"

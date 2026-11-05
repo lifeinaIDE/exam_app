@@ -302,11 +302,24 @@ export default function Assessment() {
         } catch (_e) {}
       }
 
+      // Resolve candidate name reliably from state or localStorage
+      let resolvedName = candidateName;
+      if (!resolvedName) {
+        try {
+          const raw = localStorage.getItem(`candidate_${candidateId}`);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            resolvedName = parsed.fullName;
+          }
+        } catch {}
+      }
+      if (!resolvedName) resolvedName = 'Participant';
+
       // Update in Firestore across collections
       // 1. Update candidate directly with score and answers
       try {
         await setDoc(doc(db, 'candidates', candidateId), {
-          fullName: candidateName || 'Participant',
+          fullName: resolvedName,
           status: 'COMPLETED',
           score: score,
           violationsCount: violationCountRef.current,
@@ -335,7 +348,7 @@ export default function Assessment() {
       try {
         await setDoc(doc(db, 'scores', candidateId), {
           candidateId,
-          fullName: candidateName || 'Participant',
+          fullName: resolvedName,
           score,
           total: 40,
           status: 'COMPLETED',

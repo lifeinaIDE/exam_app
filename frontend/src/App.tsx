@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Registration from './pages/Registration';
 import Assessment from './pages/Assessment';
@@ -7,8 +7,18 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import Result from './pages/Result';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { syncLocalSubmissionsToFirestore } from './utils/syncResults';
 
 function App() {
+  useEffect(() => {
+    // Automatically upload any unsynced local assessment submissions to Firestore
+    syncLocalSubmissionsToFirestore().then(count => {
+      if (count > 0) {
+        console.log(`Auto-synced ${count} assessment submission(s) to cloud database.`);
+      }
+    });
+  }, []);
+
   return (
     <Router>
       <div className="min-h-screen bg-secondaryBg font-sans text-textPrimary">
