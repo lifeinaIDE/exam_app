@@ -67,7 +67,7 @@ export default function Registration() {
         to="/admin" 
         className="fixed top-4 right-4 z-50 inline-flex items-center gap-1 px-3 py-1.5 bg-white hover:bg-gray-50 border border-border text-xs font-semibold text-textSecondary hover:text-primary rounded-lg shadow-sm transition"
       >
-        <span>🔒</span> Admin
+        <span>🔒</span>
       </Link>
 
       <div className="bg-white py-10 px-6 md:p-10 md:rounded-2xl md:shadow-xl w-full max-w-lg md:border border-border flex flex-col justify-center">

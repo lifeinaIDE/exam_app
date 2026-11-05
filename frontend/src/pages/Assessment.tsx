@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { collection, query, getDocs, doc, getDoc, where, addDoc, updateDoc, serverTimestamp, writeBatch, limit } from 'firebase/firestore';
+import { collection, query, getDocs, doc, getDoc, where, addDoc, updateDoc, setDoc, serverTimestamp, writeBatch, limit } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useStore } from '../store/useStore';
 import { defaultQuestionsPool } from '../data/questions';
@@ -259,7 +259,7 @@ export default function Assessment() {
         }
       }
 
-      // Update in localStorage
+      // Update session in localStorage
       const saved = localStorage.getItem(`session_${candidateId}`);
       if (saved) {
         try {
@@ -267,11 +267,39 @@ export default function Assessment() {
           parsed.status = 'COMPLETED';
           parsed.endTime = new Date().toISOString();
           parsed.score = score;
+          parsed.violationsCount = violationCountRef.current;
           localStorage.setItem(`session_${candidateId}`, JSON.stringify(parsed));
         } catch (_e) {}
       }
 
-      // Update in Firestore
+      // Update candidate in localStorage
+      const savedCand = localStorage.getItem(`candidate_${candidateId}`);
+      if (savedCand) {
+        try {
+          const parsedCand = JSON.parse(savedCand);
+          parsedCand.status = 'COMPLETED';
+          parsedCand.score = score;
+          parsedCand.violationsCount = violationCountRef.current;
+          parsedCand.completedAt = new Date().toISOString();
+          localStorage.setItem(`candidate_${candidateId}`, JSON.stringify(parsedCand));
+        } catch (_e) {}
+      }
+
+      // Update in Firestore across collections
+      // 1. Update candidate directly with score
+      try {
+        await setDoc(doc(db, 'candidates', candidateId), {
+          fullName: candidateName || 'Participant',
+          status: 'COMPLETED',
+          score: score,
+          violationsCount: violationCountRef.current,
+          completedAt: serverTimestamp()
+        }, { merge: true });
+      } catch (_e: any) {
+        console.warn('Firestore candidate score update notice:', _e?.message);
+      }
+
+      // 2. Update session with score
       try {
         await updateDoc(doc(db, 'sessions', sId), {
           status: 'COMPLETED',
@@ -279,8 +307,21 @@ export default function Assessment() {
           score
         });
       } catch (_e: any) {
-        console.warn('Firestore submit update notice:', _e?.message);
+        console.warn('Firestore session submit update notice:', _e?.message);
       }
+
+      // 3. Update dedicated scores collection
+      try {
+        await setDoc(doc(db, 'scores', candidateId), {
+          candidateId,
+          fullName: candidateName || 'Participant',
+          score,
+          total: 40,
+          status: 'COMPLETED',
+          violationsCount: violationCountRef.current,
+          submittedAt: serverTimestamp()
+        });
+      } catch (_e: any) {}
 
       toast.success('Assessment submitted successfully');
       navigate('/result', { state: { score } });

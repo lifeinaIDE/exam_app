@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { collection, query, orderBy, getDocs, where } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 
 interface Candidate {
@@ -25,76 +25,137 @@ export default function AdminDashboard() {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
+  const [firestoreError, setFirestoreError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const fetchCandidates = useCallback(async () => {
     setLoading(true);
-    const results: Candidate[] = [];
+    setFirestoreError(null);
+    const resultsMap = new Map<string, Candidate>();
 
-    // 1. Attempt to fetch from Firestore
+    // 1. Fetch from Firestore candidates collection
     try {
       const candidatesSnap = await getDocs(query(collection(db, 'candidates'), orderBy('createdAt', 'desc')));
-      for (const candidateDoc of candidatesSnap.docs) {
+      candidatesSnap.forEach(candidateDoc => {
         const data = candidateDoc.data();
-        let sessionData = null;
+        const candId = candidateDoc.id;
+        const createdAt = data.createdAt?.toDate 
+          ? data.createdAt.toDate().toISOString() 
+          : (data.completedAt?.toDate ? data.completedAt.toDate().toISOString() : new Date().toISOString());
 
-        try {
-          const sessionsSnap = await getDocs(query(collection(db, 'sessions'), where('candidateId', '==', candidateDoc.id)));
-          if (!sessionsSnap.empty) {
-            const sDoc = sessionsSnap.docs[0].data();
-            sessionData = {
-              status: sDoc.status || 'IN_PROGRESS',
-              score: sDoc.score !== undefined ? sDoc.score : null,
-              violationsCount: sDoc.violationsCount || 0,
-              startTime: sDoc.startTime?.toDate ? sDoc.startTime.toDate().toISOString() : new Date().toISOString(),
-              endTime: sDoc.endTime?.toDate ? sDoc.endTime.toDate().toISOString() : null
-            };
-          }
-        } catch {}
-
-        const createdAt = data.createdAt?.toDate ? data.createdAt.toDate().toISOString() : new Date().toISOString();
-        results.push({
-          id: candidateDoc.id,
+        resultsMap.set(candId, {
+          id: candId,
           fullName: data.fullName || 'Anonymous Candidate',
           createdAt,
-          session: sessionData
+          session: {
+            status: data.status || 'IN_PROGRESS',
+            score: typeof data.score === 'number' ? data.score : null,
+            violationsCount: data.violationsCount || 0,
+            startTime: createdAt,
+            endTime: data.completedAt?.toDate ? data.completedAt.toDate().toISOString() : null
+          }
         });
-      }
+      });
     } catch (err: any) {
-      console.warn('Firestore fetch notice:', err?.message);
+      console.warn('Firestore candidates fetch notice:', err?.message);
+      if (err?.message?.includes('permission') || err?.code === 'permission-denied') {
+        setFirestoreError('Firebase Firestore security rules are currently restricting access. Remote scores cannot sync until rules are updated to allow read/write.');
+      }
     }
 
-    // 2. Also aggregate from localStorage if any candidates took the exam locally
+    // 2. Fetch from Firestore scores collection
+    try {
+      const scoresSnap = await getDocs(collection(db, 'scores'));
+      scoresSnap.forEach(scDoc => {
+        const scData = scDoc.data();
+        const candId = scData.candidateId || scDoc.id;
+        const existing = resultsMap.get(candId);
+        if (existing && existing.session) {
+          if (typeof scData.score === 'number') {
+            existing.session.score = scData.score;
+            existing.session.status = scData.status || 'COMPLETED';
+          }
+        } else if (!existing) {
+          const createdAt = scData.submittedAt?.toDate ? scData.submittedAt.toDate().toISOString() : new Date().toISOString();
+          resultsMap.set(candId, {
+            id: candId,
+            fullName: scData.fullName || 'Candidate',
+            createdAt,
+            session: {
+              status: scData.status || 'COMPLETED',
+              score: typeof scData.score === 'number' ? scData.score : null,
+              violationsCount: scData.violationsCount || 0,
+              startTime: createdAt,
+              endTime: createdAt
+            }
+          });
+        }
+      });
+    } catch (err: any) {}
+
+    // 3. Fetch from Firestore sessions collection in bulk
+    try {
+      const sessionsSnap = await getDocs(collection(db, 'sessions'));
+      sessionsSnap.forEach(sDoc => {
+        const sData = sDoc.data();
+        const candId = sData.candidateId;
+        if (candId && resultsMap.has(candId)) {
+          const existing = resultsMap.get(candId)!;
+          if (existing.session && typeof sData.score === 'number') {
+            existing.session.score = sData.score;
+            existing.session.status = sData.status || 'COMPLETED';
+          }
+        }
+      });
+    } catch (err: any) {}
+
+    // 4. Merge all candidate and session records from localStorage
     try {
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key && key.startsWith('candidate_')) {
-          const cand = JSON.parse(localStorage.getItem(key) || '{}');
-          if (cand.id && !results.some(r => r.id === cand.id)) {
-            const sessRaw = localStorage.getItem(`session_${cand.id}`);
-            let sessionData = null;
-            if (sessRaw) {
-              const sess = JSON.parse(sessRaw);
-              sessionData = {
-                status: sess.status || 'IN_PROGRESS',
-                score: sess.score !== undefined ? sess.score : null,
-                violationsCount: sess.violationsCount || 0,
-                startTime: sess.startTime ? new Date(sess.startTime).toISOString() : new Date().toISOString(),
-                endTime: sess.endTime || null
-              };
+        if (key && (key.startsWith('candidate_') || key.startsWith('session_'))) {
+          const raw = localStorage.getItem(key);
+          if (!raw) continue;
+          try {
+            const parsed = JSON.parse(raw);
+            const candId = parsed.id || parsed.candidateId;
+            if (!candId) continue;
+
+            const sessRaw = localStorage.getItem(`session_${candId}`);
+            const parsedSess = sessRaw ? JSON.parse(sessRaw) : null;
+
+            const candScore = typeof parsed.score === 'number' 
+              ? parsed.score 
+              : (parsedSess && typeof parsedSess.score === 'number' ? parsedSess.score : null);
+            const candStatus = parsed.status || (parsedSess ? parsedSess.status : 'IN_PROGRESS');
+            const candViolations = parsed.violationsCount || (parsedSess ? parsedSess.violationsCount : 0);
+
+            if (resultsMap.has(candId)) {
+              const existing = resultsMap.get(candId)!;
+              if (existing.session && (existing.session.score === null || existing.session.score === undefined) && candScore !== null) {
+                existing.session.score = candScore;
+                existing.session.status = candStatus;
+              }
+            } else {
+              resultsMap.set(candId, {
+                id: candId,
+                fullName: parsed.fullName || parsed.candidateName || 'Participant',
+                createdAt: parsed.createdAt || new Date().toISOString(),
+                session: {
+                  status: candStatus,
+                  score: candScore,
+                  violationsCount: candViolations,
+                  startTime: parsedSess?.startTime ? new Date(parsedSess.startTime).toISOString() : new Date().toISOString(),
+                  endTime: parsedSess?.endTime || null
+                }
+              });
             }
-            results.push({
-              id: cand.id,
-              fullName: cand.fullName || 'Anonymous Candidate',
-              createdAt: cand.createdAt || new Date().toISOString(),
-              session: sessionData
-            });
-          }
+          } catch {}
         }
       }
     } catch {}
 
-    setCandidates(results);
+    setCandidates(Array.from(resultsMap.values()));
     setLoading(false);
   }, []);
 
@@ -155,7 +216,7 @@ export default function AdminDashboard() {
   );
 
   const completedCount = candidates.filter(c => c.session?.status === 'COMPLETED').length;
-  const completedWithScore = candidates.filter(c => c.session?.status === 'COMPLETED' && typeof c.session.score === 'number');
+  const completedWithScore = candidates.filter(c => c.session && typeof c.session.score === 'number');
   const avgScore = completedWithScore.length > 0
     ? (completedWithScore.reduce((acc, c) => acc + (c.session?.score || 0), 0) / completedWithScore.length).toFixed(1)
     : '0';
@@ -251,6 +312,32 @@ export default function AdminDashboard() {
 
       {/* Main Container */}
       <main className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full">
+        {/* Firestore Notice Banner if permissions blocked */}
+        {firestoreError && (
+          <div className="mb-6 bg-amber-50 border-2 border-amber-300 rounded-xl p-4 text-amber-900 shadow-sm">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl">⚠️</span>
+              <div className="flex-1 text-sm">
+                <p className="font-bold text-amber-950 mb-1">Firebase Security Rules Notice</p>
+                <p className="mb-2 text-amber-800">
+                  {firestoreError}
+                </p>
+                <div className="bg-amber-100 p-2.5 rounded-lg font-mono text-xs text-amber-950 mb-2 border border-amber-200">
+                  allow read, write: if true;
+                </div>
+                <a 
+                  href="https://console.firebase.google.com/project/exam-app-ccc1c/firestore/rules" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 font-bold text-primary hover:underline text-xs"
+                >
+                  Open Firebase Rules Console to Publish Update →
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Metric Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <div className="bg-white p-5 rounded-xl border border-border shadow-sm">
@@ -306,43 +393,48 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border text-sm">
-                  {filteredCandidates.map((c, idx) => (
-                    <tr key={c.id} className="hover:bg-blue-50/40 transition">
-                      <td className="p-4 text-textSecondary font-medium">{idx + 1}</td>
-                      <td className="p-4">
-                        <span className="font-bold text-textPrimary text-base">{c.fullName}</span>
-                        <div className="text-xs text-textSecondary font-mono">{c.id}</div>
-                      </td>
-                      <td className="p-4 text-textSecondary text-xs">
-                        {new Date(c.createdAt).toLocaleString()}
-                      </td>
-                      <td className="p-4 text-center">
-                        {!c.session ? (
-                          <span className="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-semibold">NOT STARTED</span>
-                        ) : c.session.status === 'IN_PROGRESS' ? (
-                          <span className="px-2.5 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">IN PROGRESS</span>
-                        ) : c.session.status === 'TERMINATED' ? (
-                          <span className="px-2.5 py-1 bg-red-100 text-red-800 rounded-full text-xs font-semibold">TERMINATED</span>
-                        ) : (
-                          <span className="px-2.5 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">COMPLETED</span>
-                        )}
-                      </td>
-                      <td className="p-4 text-center">
-                        <span className={`font-semibold ${c.session && c.session.violationsCount > 0 ? 'text-error' : 'text-gray-500'}`}>
-                          {c.session ? c.session.violationsCount : 0}
-                        </span>
-                      </td>
-                      <td className="p-4 text-center">
-                        {c.session?.score !== null && c.session?.score !== undefined ? (
-                          <span className="font-extrabold text-lg text-primary bg-blue-50 px-3 py-1 rounded-lg border border-blue-100">
-                            {c.session.score} <span className="text-xs font-normal text-textSecondary">/ 40</span>
+                  {filteredCandidates.map((c, idx) => {
+                    const scoreVal = c.session?.score;
+                    const hasScore = typeof scoreVal === 'number';
+
+                    return (
+                      <tr key={c.id} className="hover:bg-blue-50/40 transition">
+                        <td className="p-4 text-textSecondary font-medium">{idx + 1}</td>
+                        <td className="p-4">
+                          <span className="font-bold text-textPrimary text-base">{c.fullName}</span>
+                          <div className="text-xs text-textSecondary font-mono">{c.id}</div>
+                        </td>
+                        <td className="p-4 text-textSecondary text-xs">
+                          {new Date(c.createdAt).toLocaleString()}
+                        </td>
+                        <td className="p-4 text-center">
+                          {!c.session ? (
+                            <span className="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-semibold">NOT STARTED</span>
+                          ) : c.session.status === 'IN_PROGRESS' ? (
+                            <span className="px-2.5 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">IN PROGRESS</span>
+                          ) : c.session.status === 'TERMINATED' ? (
+                            <span className="px-2.5 py-1 bg-red-100 text-red-800 rounded-full text-xs font-semibold">TERMINATED</span>
+                          ) : (
+                            <span className="px-2.5 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">COMPLETED</span>
+                          )}
+                        </td>
+                        <td className="p-4 text-center">
+                          <span className={`font-semibold ${c.session && c.session.violationsCount > 0 ? 'text-error' : 'text-gray-500'}`}>
+                            {c.session ? c.session.violationsCount : 0}
                           </span>
-                        ) : (
-                          <span className="text-textSecondary">-</span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                        <td className="p-4 text-center">
+                          {hasScore ? (
+                            <span className="inline-flex items-center gap-1 font-extrabold text-lg text-primary bg-blue-50 px-3 py-1 rounded-lg border border-blue-200">
+                              {scoreVal} <span className="text-xs font-normal text-textSecondary">/ 40</span>
+                            </span>
+                          ) : (
+                            <span className="text-gray-400 font-medium">Pending</span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             )}
