@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, deleteDoc, query, where } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 
 interface CandidateAnswer {
@@ -29,16 +29,22 @@ interface Candidate {
   } | null;
 }
 
-function isToday(dateStr: string): boolean {
+function isTodayOrRecent(dateStr: string): boolean {
   if (!dateStr) return false;
   try {
     const d = new Date(dateStr);
-    const today = new Date();
-    return (
-      d.getFullYear() === today.getFullYear() &&
-      d.getMonth() === today.getMonth() &&
-      d.getDate() === today.getDate()
+    if (isNaN(d.getTime())) return false;
+    const now = new Date();
+    // Same calendar date (local)
+    const isSameDate = (
+      d.getFullYear() === now.getFullYear() &&
+      d.getMonth() === now.getMonth() &&
+      d.getDate() === now.getDate()
     );
+    // Or within last 24 hours
+    const diffMs = now.getTime() - d.getTime();
+    const isWithin24Hours = diffMs >= 0 && diffMs <= 24 * 60 * 60 * 1000;
+    return isSameDate || isWithin24Hours;
   } catch {
     return false;
   }
@@ -218,13 +224,6 @@ export default function AdminDashboard() {
     });
 
     setCandidates(sorted);
-
-    // If there are candidates today, default to 'today'; if none today, show 'all'
-    const hasToday = sorted.some(c => isToday(c.createdAt));
-    if (!hasToday && sorted.length > 0) {
-      setViewFilter('all');
-    }
-
     setLoading(false);
   }, []);
 
@@ -278,16 +277,17 @@ export default function AdminDashboard() {
   };
 
   const handleClearOldCandidates = async () => {
-    const oldCandidates = candidates.filter(c => !isToday(c.createdAt));
+    const oldCandidates = candidates.filter(c => !isTodayOrRecent(c.createdAt));
     if (oldCandidates.length === 0) {
-      toast.info('No old candidates to clear.');
+      toast.info('No old candidates from previous dates to clear.');
       return;
     }
 
-    if (!window.confirm(`Clear ${oldCandidates.length} old candidates from previous dates? Today's candidates will be preserved.`)) {
+    if (!window.confirm(`Clear ${oldCandidates.length} old submissions from previous dates (August 2026)? Today's submissions will be kept safe.`)) {
       return;
     }
 
+    setLoading(true);
     for (const c of oldCandidates) {
       try {
         await deleteDoc(doc(db, 'candidates', c.id));
@@ -295,12 +295,19 @@ export default function AdminDashboard() {
       try {
         await deleteDoc(doc(db, 'scores', c.id));
       } catch {}
+      try {
+        const sessSnap = await getDocs(query(collection(db, 'sessions'), where('candidateId', '==', c.id)));
+        for (const sDoc of sessSnap.docs) {
+          await deleteDoc(doc(db, 'sessions', sDoc.id));
+        }
+      } catch {}
       localStorage.removeItem(`candidate_${c.id}`);
       localStorage.removeItem(`session_${c.id}`);
     }
 
-    setCandidates(prev => prev.filter(c => isToday(c.createdAt)));
-    toast.success('Old candidates cleared!');
+    setCandidates(prev => prev.filter(c => isTodayOrRecent(c.createdAt)));
+    setLoading(false);
+    toast.success('Old test submissions purged successfully!');
   };
 
   const handleExportCSV = () => {
@@ -333,7 +340,7 @@ export default function AdminDashboard() {
   };
 
   // Filter candidates by today vs all, and by search term
-  const todayCandidates = candidates.filter(c => isToday(c.createdAt));
+  const todayCandidates = candidates.filter(c => isTodayOrRecent(c.createdAt));
   const displayedCandidates = (viewFilter === 'today' ? todayCandidates : candidates).filter(c =>
     (c.fullName || '').toLowerCase().includes(search.toLowerCase())
   );
@@ -424,13 +431,13 @@ export default function AdminDashboard() {
             Export CSV
           </button>
 
-          {candidates.some(c => !isToday(c.createdAt)) && (
+          {candidates.some(c => !isTodayOrRecent(c.createdAt)) && (
             <button 
               onClick={handleClearOldCandidates}
-              className="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-xs font-semibold transition"
-              title="Purge past testing data"
+              className="px-3.5 py-2 bg-red-50 hover:bg-red-100 text-error border border-red-200 rounded-lg text-xs font-bold transition flex items-center gap-1.5"
+              title="Purge past testing data from August"
             >
-              Clear Old Tests
+              🗑️ Clear Old Tests ({candidates.filter(c => !isTodayOrRecent(c.createdAt)).length})
             </button>
           )}
 
