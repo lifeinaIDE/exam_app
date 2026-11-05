@@ -1,0 +1,1082 @@
+[
+  {
+    "id": "q_1",
+    "qNo": 1,
+    "text": "Which university did Ratan Tata graduate from in architecture?",
+    "options": [
+      "Harvard",
+      "Princeton",
+      "Cornell",
+      "Columbia"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "Cornell",
+    "sourceArticle": "Ratan Tata",
+    "marks": 1
+  },
+  {
+    "id": "q_2",
+    "qNo": 2,
+    "text": "Who raised Ratan Tata after his parents' separation?",
+    "options": [
+      "Father",
+      "Uncle",
+      "Aunt",
+      "Grandmother"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "Grandmother",
+    "sourceArticle": "Ratan Tata",
+    "marks": 1
+  },
+  {
+    "id": "q_3",
+    "qNo": 3,
+    "text": "In which year did JRD Tata name Ratan Tata chairman of Tata Sons?",
+    "options": [
+      "1985",
+      "2000",
+      "1996",
+      "1991"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "1991",
+    "sourceArticle": "Ratan Tata",
+    "marks": 1
+  },
+  {
+    "id": "q_4",
+    "qNo": 4,
+    "text": "Which brand did the Tata Group acquire in the year 2000?",
+    "options": [
+      "Lipton",
+      "Tetley",
+      "Corus",
+      "Jaguar"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "Tetley",
+    "sourceArticle": "Ratan Tata",
+    "marks": 1
+  },
+  {
+    "id": "q_5",
+    "qNo": 5,
+    "text": "The Tata Nano was designed to make ___ ownership possible for millions of Indian families.",
+    "options": [
+      "Car",
+      "Phone",
+      "Home",
+      "Land"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "Car",
+    "sourceArticle": "Ratan Tata",
+    "marks": 1
+  },
+  {
+    "id": "q_6",
+    "qNo": 6,
+    "text": "How much did Ratan Tata donate to IIT Bombay in 2023?",
+    "options": [
+      "₹500 crore",
+      "₹750 crore",
+      "₹950 crore",
+      "₹1,500 crore"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "₹950 crore",
+    "sourceArticle": "Ratan Tata",
+    "marks": 1
+  },
+  {
+    "id": "q_7",
+    "qNo": 7,
+    "text": "After the 26/11 attacks, no staff member of which hotel lost their job?",
+    "options": [
+      "Oberoi",
+      "Leela",
+      "Hyatt",
+      "Taj"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "Taj",
+    "sourceArticle": "Ratan Tata",
+    "marks": 1
+  },
+  {
+    "id": "q_8",
+    "qNo": 8,
+    "text": "What portion of Tata Sons' profits do Tata Trusts direct to social causes?",
+    "options": [
+      "Half",
+      "One-third",
+      "Two-thirds",
+      "Three-quarters"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "Two-thirds",
+    "sourceArticle": "Ratan Tata",
+    "marks": 1
+  },
+  {
+    "id": "q_9",
+    "qNo": 9,
+    "text": "Which honour did Ratan Tata receive in 2008?",
+    "options": [
+      "Padma Vibhushan",
+      "Padma Shri",
+      "Bharat Ratna",
+      "Padma Bhushan"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "Padma Vibhushan",
+    "sourceArticle": "Ratan Tata",
+    "marks": 1
+  },
+  {
+    "id": "q_10",
+    "qNo": 10,
+    "text": "In which year did Ratan Tata join social media?",
+    "options": [
+      "2019",
+      "2015",
+      "2012",
+      "2021"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "2019",
+    "sourceArticle": "Ratan Tata",
+    "marks": 1
+  },
+  {
+    "id": "q_11",
+    "qNo": 11,
+    "text": "Which mapping startup did Ola acquire in 2021?",
+    "options": [
+      "Mappls",
+      "GeoSpoc",
+      "Waze",
+      "TomTom"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "GeoSpoc",
+    "sourceArticle": "Ola Maps and Krutrim AI",
+    "marks": 1
+  },
+  {
+    "id": "q_12",
+    "qNo": 12,
+    "text": "Approximately how much did Google Maps cost Ola every year?",
+    "options": [
+      "₹500 crore",
+      "₹10 crore",
+      "₹100 crore",
+      "₹50 crore"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "₹100 crore",
+    "sourceArticle": "Ola Maps and Krutrim AI",
+    "marks": 1
+  },
+  {
+    "id": "q_13",
+    "qNo": 13,
+    "text": "What is the name of Krutrim's AI assistant?",
+    "options": [
+      "Kavi",
+      "Kruti",
+      "Krish",
+      "Karma"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "Kruti",
+    "sourceArticle": "Ola Maps and Krutrim AI",
+    "marks": 1
+  },
+  {
+    "id": "q_14",
+    "qNo": 14,
+    "text": "In which month of 2025 was Krutrim AI launched?",
+    "options": [
+      "January",
+      "February",
+      "March",
+      "May"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "February",
+    "sourceArticle": "Ola Maps and Krutrim AI",
+    "marks": 1
+  },
+  {
+    "id": "q_15",
+    "qNo": 15,
+    "text": "Krutrim became India's first AI ___ within months of its launch.",
+    "options": [
+      "Incubator",
+      "Decacorn",
+      "Unicorn",
+      "Lab"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "Unicorn",
+    "sourceArticle": "Ola Maps and Krutrim AI",
+    "marks": 1
+  },
+  {
+    "id": "q_16",
+    "qNo": 16,
+    "text": "In which city was WAVES 2025 held?",
+    "options": [
+      "Bengaluru",
+      "Mumbai",
+      "Hyderabad",
+      "Delhi"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "Mumbai",
+    "sourceArticle": "WAVES 2025",
+    "marks": 1
+  },
+  {
+    "id": "q_17",
+    "qNo": 17,
+    "text": "How many countries' representatives signed the WAVES Declaration?",
+    "options": [
+      "90",
+      "140",
+      "77",
+      "40"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "77",
+    "sourceArticle": "WAVES 2025",
+    "marks": 1
+  },
+  {
+    "id": "q_18",
+    "qNo": 18,
+    "text": "India's first feature film, Raja Harishchandra, was released in which year?",
+    "options": [
+      "1947",
+      "1913",
+      "1931",
+      "1899"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "1913",
+    "sourceArticle": "WAVES 2025",
+    "marks": 1
+  },
+  {
+    "id": "q_19",
+    "qNo": 19,
+    "text": "Who moderated the discussion with cinema legends like Hema Malini and Rajinikanth?",
+    "options": [
+      "Akshay Kumar",
+      "Anupam Kher",
+      "Karan Johar",
+      "AR Rahman"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "Akshay Kumar",
+    "sourceArticle": "WAVES 2025",
+    "marks": 1
+  },
+  {
+    "id": "q_20",
+    "qNo": 20,
+    "text": "Out of 3,000+ Create in India Challenge submissions, how many young filmmakers were showcased?",
+    "options": [
+      "600",
+      "1,000",
+      "100",
+      "300"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "600",
+    "sourceArticle": "WAVES 2025",
+    "marks": 1
+  },
+  {
+    "id": "q_21",
+    "qNo": 21,
+    "text": "The WAVES Bazaar will give global access to Indian ___ products.",
+    "options": [
+      "Industrial",
+      "Agricultural",
+      "Cultural",
+      "Digital"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "Cultural",
+    "sourceArticle": "WAVES 2025",
+    "marks": 1
+  },
+  {
+    "id": "q_22",
+    "qNo": 22,
+    "text": "In which US state did Ulukaya buy a shuttered yogurt plant in 2005?",
+    "options": [
+      "Ohio",
+      "Vermont",
+      "New York",
+      "Texas"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "New York",
+    "sourceArticle": "Hamdi Ulukaya",
+    "marks": 1
+  },
+  {
+    "id": "q_23",
+    "qNo": 23,
+    "text": "What percentage of Chobani did Ulukaya give to employees in 2016?",
+    "options": [
+      "15%",
+      "25%",
+      "10%",
+      "5%"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "10%",
+    "sourceArticle": "Hamdi Ulukaya",
+    "marks": 1
+  },
+  {
+    "id": "q_24",
+    "qNo": 24,
+    "text": "The Tent Partnership founded by Ulukaya supports which group?",
+    "options": [
+      "Farmers",
+      "Students",
+      "Veterans",
+      "Refugees"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "Refugees",
+    "sourceArticle": "Hamdi Ulukaya",
+    "marks": 1
+  },
+  {
+    "id": "q_25",
+    "qNo": 25,
+    "text": "Which product category did Chobani expand into?",
+    "options": [
+      "Soda",
+      "Creamers",
+      "Sneakers",
+      "Candles"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "Creamers",
+    "sourceArticle": "Hamdi Ulukaya",
+    "marks": 1
+  },
+  {
+    "id": "q_26",
+    "qNo": 26,
+    "text": "What is Zepto's average delivery time (in minutes) according to the article?",
+    "options": [
+      "5.20",
+      "9.50",
+      "8.47",
+      "12.00"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "8.47",
+    "sourceArticle": "Zepto vs Blinkit",
+    "marks": 1
+  },
+  {
+    "id": "q_27",
+    "qNo": 27,
+    "text": "Which platform offers the wider range of 4,000+ SKUs?",
+    "options": [
+      "Zepto",
+      "Blinkit",
+      "Instamart",
+      "BigBasket"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "Blinkit",
+    "sourceArticle": "Zepto vs Blinkit",
+    "marks": 1
+  },
+  {
+    "id": "q_28",
+    "qNo": 28,
+    "text": "Blinkit is backed by which company?",
+    "options": [
+      "Flipkart",
+      "Tata",
+      "Swiggy",
+      "Zomato"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "Zomato",
+    "sourceArticle": "Zepto vs Blinkit",
+    "marks": 1
+  },
+  {
+    "id": "q_29",
+    "qNo": 29,
+    "text": "Zepto's predictive demand engine runs at what accuracy?",
+    "options": [
+      "95%",
+      "99%",
+      "85%",
+      "80%"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "95%",
+    "sourceArticle": "Zepto vs Blinkit",
+    "marks": 1
+  },
+  {
+    "id": "q_30",
+    "qNo": 30,
+    "text": "What share of Zepto's revenue comes from Tier 1 cities?",
+    "options": [
+      "55%",
+      "75%",
+      "45%",
+      "65%"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "65%",
+    "sourceArticle": "Zepto vs Blinkit",
+    "marks": 1
+  },
+  {
+    "id": "q_31",
+    "qNo": 31,
+    "text": "Approximately how much does Zepto lose per order?",
+    "options": [
+      "₹75",
+      "₹35",
+      "₹100",
+      "₹50"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "₹50",
+    "sourceArticle": "Zepto vs Blinkit",
+    "marks": 1
+  },
+  {
+    "id": "q_32",
+    "qNo": 32,
+    "text": "How much government push is mentioned for Electronics & Semiconductors?",
+    "options": [
+      "₹76,000 crore",
+      "₹1,00,000 crore",
+      "₹50,000 crore",
+      "₹26,000 crore"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "₹76,000 crore",
+    "sourceArticle": "Mission 2025",
+    "marks": 1
+  },
+  {
+    "id": "q_33",
+    "qNo": 33,
+    "text": "Which sector is growing at 25% CAGR amid digital transformation?",
+    "options": [
+      "Medical Devices",
+      "Pharmaceuticals",
+      "Renewables",
+      "Data Centers"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "Data Centers",
+    "sourceArticle": "Mission 2025",
+    "marks": 1
+  },
+  {
+    "id": "q_34",
+    "qNo": 34,
+    "text": "EV exports are described as crossing which figure?",
+    "options": [
+      "$23B",
+      "$40B",
+      "$12B",
+      "$5B"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "$23B",
+    "sourceArticle": "Mission 2025",
+    "marks": 1
+  },
+  {
+    "id": "q_35",
+    "qNo": 35,
+    "text": "Which sector is called the 'crown jewel' in the final debrief?",
+    "options": [
+      "EVs",
+      "Pharma",
+      "Electronics",
+      "Renewables"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "Electronics",
+    "sourceArticle": "Mission 2025",
+    "marks": 1
+  },
+  {
+    "id": "q_36",
+    "qNo": 36,
+    "text": "In which city was Warren Buffett born?",
+    "options": [
+      "Chicago",
+      "Omaha",
+      "Denver",
+      "Boston"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "Omaha",
+    "sourceArticle": "Warren Buffett",
+    "marks": 1
+  },
+  {
+    "id": "q_37",
+    "qNo": 37,
+    "text": "How many shares of Cities Service Preferred did Buffett buy at age eleven?",
+    "options": [
+      "Five",
+      "Twenty",
+      "Ten",
+      "Three"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "Three",
+    "sourceArticle": "Warren Buffett",
+    "marks": 1
+  },
+  {
+    "id": "q_38",
+    "qNo": 38,
+    "text": "Who was Buffett's mentor and the father of value investing?",
+    "options": [
+      "Lynch",
+      "Graham",
+      "Soros",
+      "Munger"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "Graham",
+    "sourceArticle": "Warren Buffett",
+    "marks": 1
+  },
+  {
+    "id": "q_39",
+    "qNo": 39,
+    "text": "Berkshire Hathaway was originally which type of company?",
+    "options": [
+      "Textile",
+      "Railway",
+      "Banking",
+      "Insurance"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "Textile",
+    "sourceArticle": "Warren Buffett",
+    "marks": 1
+  },
+  {
+    "id": "q_40",
+    "qNo": 40,
+    "text": "In which year was the Giving Pledge launched?",
+    "options": [
+      "2000",
+      "2005",
+      "2015",
+      "2010"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "2010",
+    "sourceArticle": "Warren Buffett",
+    "marks": 1
+  },
+  {
+    "id": "q_41",
+    "qNo": 41,
+    "text": "In which year did Buffett purchase his modest Omaha home?",
+    "options": [
+      "1958",
+      "1948",
+      "1965",
+      "1975"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "1958",
+    "sourceArticle": "Warren Buffett",
+    "marks": 1
+  },
+  {
+    "id": "q_42",
+    "qNo": 42,
+    "text": "Which brand donated a $10 million tax windfall to environmental causes in 2018?",
+    "options": [
+      "Patagonia",
+      "Tesla",
+      "Unilever",
+      "TOMS"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "Patagonia",
+    "sourceArticle": "Profits vs Purpose",
+    "marks": 1
+  },
+  {
+    "id": "q_43",
+    "qNo": 43,
+    "text": "Nearly what percentage of startups fail within five years?",
+    "options": [
+      "65%",
+      "80%",
+      "50%",
+      "30%"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "50%",
+    "sourceArticle": "Profits vs Purpose",
+    "marks": 1
+  },
+  {
+    "id": "q_44",
+    "qNo": 44,
+    "text": "What percentage of millennials would refuse to work for a company without a clear purpose (Cone study)?",
+    "options": [
+      "68%",
+      "58%",
+      "48%",
+      "78%"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "68%",
+    "sourceArticle": "Profits vs Purpose",
+    "marks": 1
+  },
+  {
+    "id": "q_45",
+    "qNo": 45,
+    "text": "How many vehicles did Tesla deliver in 2022?",
+    "options": [
+      "3.2 million",
+      "1.3 million",
+      "0.8 million",
+      "2.5 million"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "1.3 million",
+    "sourceArticle": "Profits vs Purpose",
+    "marks": 1
+  },
+  {
+    "id": "q_46",
+    "qNo": 46,
+    "text": "Companies committing to consider impact on workers and communities are called Certified ___ Corporations.",
+    "options": [
+      "B",
+      "S",
+      "A",
+      "C"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "B",
+    "sourceArticle": "Profits vs Purpose",
+    "marks": 1
+  },
+  {
+    "id": "q_47",
+    "qNo": 47,
+    "text": "What did Chouinard teach himself to make stronger climbing gear?",
+    "options": [
+      "Welding",
+      "Carpentry",
+      "Blacksmithing",
+      "Tailoring"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "Blacksmithing",
+    "sourceArticle": "Yvon Chouinard",
+    "marks": 1
+  },
+  {
+    "id": "q_48",
+    "qNo": 48,
+    "text": "Patagonia pledged 1% of sales to environmental causes in which year?",
+    "options": [
+      "1985",
+      "2005",
+      "1975",
+      "1995"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "1985",
+    "sourceArticle": "Yvon Chouinard",
+    "marks": 1
+  },
+  {
+    "id": "q_49",
+    "qNo": 49,
+    "text": "In the 1990s, Patagonia transitioned to which type of cotton?",
+    "options": [
+      "Synthetic",
+      "Recycled",
+      "Imported",
+      "Organic"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "Organic",
+    "sourceArticle": "Yvon Chouinard",
+    "marks": 1
+  },
+  {
+    "id": "q_50",
+    "qNo": 50,
+    "text": "Around what value was Patagonia when the Chouinard family gave it away in 2022?",
+    "options": [
+      "$5 billion",
+      "$3 billion",
+      "$10 billion",
+      "$1 billion"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "$3 billion",
+    "sourceArticle": "Yvon Chouinard",
+    "marks": 1
+  },
+  {
+    "id": "q_51",
+    "qNo": 51,
+    "text": "Complete Chouinard's quote: 'Earth is now our only ___.'",
+    "options": [
+      "Customer",
+      "Partner",
+      "Owner",
+      "Shareholder"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "Shareholder",
+    "sourceArticle": "Yvon Chouinard",
+    "marks": 1
+  },
+  {
+    "id": "q_52",
+    "qNo": 52,
+    "text": "Who is the founder of TOMS?",
+    "options": [
+      "Chouinard",
+      "Polman",
+      "Ulukaya",
+      "Mycoskie"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "Mycoskie",
+    "sourceArticle": "Beyond Profits",
+    "marks": 1
+  },
+  {
+    "id": "q_53",
+    "qNo": 53,
+    "text": "How many lives has TOMS impacted, according to the article?",
+    "options": [
+      "75 million",
+      "150 million",
+      "105 million",
+      "50 million"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "105 million",
+    "sourceArticle": "Beyond Profits",
+    "marks": 1
+  },
+  {
+    "id": "q_54",
+    "qNo": 54,
+    "text": "Who led Unilever's transformation into a purpose-driven company?",
+    "options": [
+      "Mycoskie",
+      "Kurien",
+      "Aggarwal",
+      "Polman"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "Polman",
+    "sourceArticle": "Beyond Profits",
+    "marks": 1
+  },
+  {
+    "id": "q_55",
+    "qNo": 55,
+    "text": "By how much did Unilever's share price rise under Paul Polman?",
+    "options": [
+      "390%",
+      "290%",
+      "150%",
+      "190%"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "290%",
+    "sourceArticle": "Beyond Profits",
+    "marks": 1
+  },
+  {
+    "id": "q_56",
+    "qNo": 56,
+    "text": "A.P. Moller Maersk, the shipping giant, is from which country?",
+    "options": [
+      "Norway",
+      "Denmark",
+      "Sweden",
+      "Germany"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "Denmark",
+    "sourceArticle": "Beyond Profits",
+    "marks": 1
+  },
+  {
+    "id": "q_57",
+    "qNo": 57,
+    "text": "Employees at purpose-driven companies are how many times more engaged and productive?",
+    "options": [
+      "1.2",
+      "1.4",
+      "2.0",
+      "2.5"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "1.4",
+    "sourceArticle": "Beyond Profits",
+    "marks": 1
+  },
+  {
+    "id": "q_58",
+    "qNo": 58,
+    "text": "In which year was Amul founded?",
+    "options": [
+      "1951",
+      "1960",
+      "1936",
+      "1946"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "1946",
+    "sourceArticle": "Beyond Profits",
+    "marks": 1
+  },
+  {
+    "id": "q_59",
+    "qNo": 59,
+    "text": "Which leader is associated with Amul's spread through the National Dairy Development Board?",
+    "options": [
+      "Polman",
+      "Tata",
+      "Kurien",
+      "Chouinard"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "Kurien",
+    "sourceArticle": "Beyond Profits",
+    "marks": 1
+  },
+  {
+    "id": "q_60",
+    "qNo": 60,
+    "text": "How many cars did Volkswagen install secret emissions-cheating software in?",
+    "options": [
+      "1 million",
+      "5 million",
+      "11 million",
+      "20 million"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "11 million",
+    "sourceArticle": "Greenwashing",
+    "marks": 1
+  },
+  {
+    "id": "q_61",
+    "qNo": 61,
+    "text": "VW's 'clean diesel' engines emitted up to how many times the legal limit of nitrogen oxides?",
+    "options": [
+      "10",
+      "40",
+      "20",
+      "100"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "40",
+    "sourceArticle": "Greenwashing",
+    "marks": 1
+  },
+  {
+    "id": "q_62",
+    "qNo": 62,
+    "text": "BP's 2000 rebranding promised to go 'Beyond ___'.",
+    "options": [
+      "Petroleum",
+      "Profit",
+      "Carbon",
+      "Fuel"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "Petroleum",
+    "sourceArticle": "Greenwashing",
+    "marks": 1
+  },
+  {
+    "id": "q_63",
+    "qNo": 63,
+    "text": "How many lives were lost in the Deepwater Horizon disaster?",
+    "options": [
+      "Eleven",
+      "Five",
+      "Seven",
+      "Fifteen"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "Eleven",
+    "sourceArticle": "Greenwashing",
+    "marks": 1
+  },
+  {
+    "id": "q_64",
+    "qNo": 64,
+    "text": "What was the name of H&M's sustainability-themed clothing line?",
+    "options": [
+      "Planet",
+      "Conscious",
+      "Green",
+      "Eco"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "Conscious",
+    "sourceArticle": "Greenwashing",
+    "marks": 1
+  },
+  {
+    "id": "q_65",
+    "qNo": 65,
+    "text": "Which country's Consumer Agency called H&M's claims false and illegal?",
+    "options": [
+      "Norwegian",
+      "British",
+      "Swedish",
+      "American"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "Norwegian",
+    "sourceArticle": "Greenwashing",
+    "marks": 1
+  },
+  {
+    "id": "q_66",
+    "qNo": 66,
+    "text": "In which month was E-Summit'25 held?",
+    "options": [
+      "April",
+      "January",
+      "March",
+      "February"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "February",
+    "sourceArticle": "Know Your Cell",
+    "marks": 1
+  },
+  {
+    "id": "q_67",
+    "qNo": 67,
+    "text": "Eureka!, Asia's largest business model competition, featured how many tracks?",
+    "options": [
+      "Seven",
+      "Five",
+      "Six",
+      "Ten"
+    ],
+    "correctOption": 0,
+    "correctAnswer": "Seven",
+    "sourceArticle": "Know Your Cell",
+    "marks": 1
+  },
+  {
+    "id": "q_68",
+    "qNo": 68,
+    "text": "Eureka! Junior is designed for students of which classes?",
+    "options": [
+      "8–12",
+      "1–5",
+      "9–12",
+      "6–12"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "6–12",
+    "sourceArticle": "Know Your Cell",
+    "marks": 1
+  },
+  {
+    "id": "q_69",
+    "qNo": 69,
+    "text": "Eureka! GCC offered prizes worth how much?",
+    "options": [
+      "$200,000",
+      "$50,000",
+      "$100,000",
+      "$800,000"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "$100,000",
+    "sourceArticle": "Know Your Cell",
+    "marks": 1
+  },
+  {
+    "id": "q_70",
+    "qNo": 70,
+    "text": "The Campus Ambassador Program is a ___ internship.",
+    "options": [
+      "Three-month",
+      "Six-month",
+      "One-year",
+      "Two-month"
+    ],
+    "correctOption": 1,
+    "correctAnswer": "Six-month",
+    "sourceArticle": "Know Your Cell",
+    "marks": 1
+  },
+  {
+    "id": "q_71",
+    "qNo": 71,
+    "text": "Which edition of FinCoF (Freelancers, Interns, and Co-Founders platform) is mentioned?",
+    "options": [
+      "5th",
+      "12th",
+      "10th",
+      "8th"
+    ],
+    "correctOption": 2,
+    "correctAnswer": "10th",
+    "sourceArticle": "Know Your Cell",
+    "marks": 1
+  },
+  {
+    "id": "q_72",
+    "qNo": 72,
+    "text": "Who is the Editor-in-Chief of EnSpace 2025?",
+    "options": [
+      "Varun",
+      "Veda",
+      "Manoj",
+      "Sachi"
+    ],
+    "correctOption": 3,
+    "correctAnswer": "Sachi",
+    "sourceArticle": "EnSpace 2025",
+    "marks": 1
+  }
+]
