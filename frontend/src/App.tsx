@@ -17,9 +17,13 @@ function App() {
           <Route path="/domains" element={<Navigate to="/" replace />} />
           <Route path="/assessment" element={<Assessment />} />
           <Route path="/result" element={<Result />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/tables" element={<AdminDashboard />} />
+          <Route path="/admin/scores" element={<AdminDashboard />} />
+          <Route path="/scores" element={<AdminDashboard />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <ToastContainer position="top-right" autoClose={3000} />
       </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -61,7 +61,15 @@ export default function Registration() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-secondaryBg p-4 md:p-8">
+    <div className="relative flex flex-col items-center justify-center min-h-screen bg-secondaryBg p-4 md:p-8">
+      {/* Top right admin shortcut */}
+      <Link 
+        to="/admin" 
+        className="fixed top-4 right-4 z-50 inline-flex items-center gap-1 px-3 py-1.5 bg-white hover:bg-gray-50 border border-border text-xs font-semibold text-textSecondary hover:text-primary rounded-lg shadow-sm transition"
+      >
+        <span>🔒</span> Admin
+      </Link>
+
       <div className="bg-white py-10 px-6 md:p-10 md:rounded-2xl md:shadow-xl w-full max-w-lg md:border border-border flex flex-col justify-center">
         
         {/* Header */}
@@ -135,6 +143,12 @@ export default function Registration() {
             )}
           </button>
         </form>
+
+        <div className="mt-6 text-center">
+          <Link to="/admin" className="text-xs text-textSecondary hover:text-primary transition underline font-medium">
+            Go to Admin & Scores Portal →
+          </Link>
+        </div>
       </div>
     </div>
   );
