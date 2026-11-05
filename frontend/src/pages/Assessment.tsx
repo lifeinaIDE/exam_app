@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { collection, query, getDocs, doc, getDoc, where, addDoc, updateDoc, serverTimestamp, writeBatch, limit } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useStore } from '../store/useStore';
-import defaultQuestionsPool from '../data/questions.json';
+import { defaultQuestionsPool } from '../data/questions';
 
 interface Question {
   id: string;
