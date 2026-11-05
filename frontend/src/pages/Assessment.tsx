@@ -249,15 +249,30 @@ export default function Assessment() {
       const qs = currentQuestions || questions;
       let score = 0;
 
-      for (const q of qs) {
-        if (q.selectedOpt !== null && q.options && q.options[q.selectedOpt] !== undefined) {
-          const selectedText = String(q.options[q.selectedOpt]).trim().toLowerCase();
-          const correctText = String(q.correctAnswer || '').trim().toLowerCase();
-          if (selectedText === correctText) {
-            score += q.marks || 1;
-          }
+      const answersList = qs.map((q, idx) => {
+        const selectedOpt = q.selectedOpt;
+        const selectedText = (selectedOpt !== null && q.options && q.options[selectedOpt] !== undefined)
+          ? q.options[selectedOpt]
+          : null;
+        const correctText = q.correctAnswer || '';
+        const isCorrect = Boolean(
+          selectedText && correctText && selectedText.trim().toLowerCase() === correctText.trim().toLowerCase()
+        );
+        if (isCorrect) {
+          score += q.marks || 1;
         }
-      }
+        return {
+          qNo: idx + 1,
+          questionId: q.id,
+          questionText: q.text,
+          selectedOpt,
+          selectedText: selectedText || 'Unanswered',
+          correctAnswer: correctText,
+          isCorrect
+        };
+      });
+
+      const nowIso = new Date().toISOString();
 
       // Update session in localStorage
       const saved = localStorage.getItem(`session_${candidateId}`);
@@ -265,9 +280,10 @@ export default function Assessment() {
         try {
           const parsed = JSON.parse(saved);
           parsed.status = 'COMPLETED';
-          parsed.endTime = new Date().toISOString();
+          parsed.endTime = nowIso;
           parsed.score = score;
           parsed.violationsCount = violationCountRef.current;
+          parsed.answers = answersList;
           localStorage.setItem(`session_${candidateId}`, JSON.stringify(parsed));
         } catch (_e) {}
       }
@@ -280,20 +296,24 @@ export default function Assessment() {
           parsedCand.status = 'COMPLETED';
           parsedCand.score = score;
           parsedCand.violationsCount = violationCountRef.current;
-          parsedCand.completedAt = new Date().toISOString();
+          parsedCand.completedAt = nowIso;
+          parsedCand.answers = answersList;
           localStorage.setItem(`candidate_${candidateId}`, JSON.stringify(parsedCand));
         } catch (_e) {}
       }
 
       // Update in Firestore across collections
-      // 1. Update candidate directly with score
+      // 1. Update candidate directly with score and answers
       try {
         await setDoc(doc(db, 'candidates', candidateId), {
           fullName: candidateName || 'Participant',
           status: 'COMPLETED',
           score: score,
           violationsCount: violationCountRef.current,
-          completedAt: serverTimestamp()
+          completedAt: serverTimestamp(),
+          createdAt: serverTimestamp(),
+          submittedAt: nowIso,
+          answers: answersList
         }, { merge: true });
       } catch (_e: any) {
         console.warn('Firestore candidate score update notice:', _e?.message);
@@ -304,7 +324,8 @@ export default function Assessment() {
         await updateDoc(doc(db, 'sessions', sId), {
           status: 'COMPLETED',
           endTime: serverTimestamp(),
-          score
+          score,
+          answers: answersList
         });
       } catch (_e: any) {
         console.warn('Firestore session submit update notice:', _e?.message);
@@ -319,8 +340,10 @@ export default function Assessment() {
           total: 40,
           status: 'COMPLETED',
           violationsCount: violationCountRef.current,
-          submittedAt: serverTimestamp()
-        });
+          submittedAt: serverTimestamp(),
+          dateString: nowIso,
+          answers: answersList
+        }, { merge: true });
       } catch (_e: any) {}
 
       toast.success('Assessment submitted successfully');
